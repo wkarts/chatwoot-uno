@@ -225,7 +225,19 @@ export default {
       campaigns: 'campaigns/getAllCampaigns',
       labels: 'labels/getLabels',
       selectedConversations: 'bulkActions/getSelectedConversationIds',
+      contextMenuChatId: 'getContextMenuChatId',
+      isFeatureEnabledonAccount: 'accounts/isFeatureEnabledonAccount',
+      currentRole: 'getCurrentRole',
+      accountId: 'getCurrentAccountId',
     }),
+    hideAllChatsForAgents() {
+      return (
+        this.isFeatureEnabledonAccount(
+          this.accountId,
+          'hide_all_chats_for_agent'
+        ) && this.currentRole !== 'administrator'
+      );
+    },
     hasAppliedFilters() {
       return this.appliedFilters.length !== 0;
     },
@@ -257,11 +269,18 @@ export default {
         ASSIGNEE_TYPE_TAB_PERMISSIONS,
         this.userPermissions,
         item => item.permissions
-      ).map(({ key, count: countKey }) => ({
-        key,
-        name: this.$t(`CHAT_LIST.ASSIGNEE_TYPE_TABS.${key}`),
-        count: this.conversationStats[countKey] || 0,
-      }));
+      )
+        .filter(({ key }) => {
+          if (this.hideAllChatsForAgents) {
+            return key !== 'allCount';
+          }
+          return true;
+        })
+        .map(({ key, count: countKey }) => ({
+          key,
+          name: this.$t(`CHAT_LIST.ASSIGNEE_TYPE_TABS.${key}`),
+          count: this.conversationStats[countKey] || 0,
+        }));
     },
     showAssigneeInConversationCard() {
       return (
@@ -446,6 +465,7 @@ export default {
   mounted() {
     this.$store.dispatch('setChatListFilters', this.conversationFilters);
     this.setFiltersFromUISettings();
+    this.initializeAccount();
     this.$store.dispatch('setChatStatusFilter', this.activeStatus);
     this.$store.dispatch('setChatSortFilter', this.activeSortBy);
     this.resetAndFetchData();
@@ -459,6 +479,14 @@ export default {
     });
   },
   methods: {
+    async initializeAccount() {
+      try {
+        const { features } = this.getAccount(this.accountId);
+        this.features = features;
+      } catch (error) {
+        // Ignore error
+      }
+    },
     updateVirtualListProps(key, value) {
       this.virtualListExtraProps = {
         ...this.virtualListExtraProps,
