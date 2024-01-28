@@ -238,6 +238,14 @@ export default {
         ) && this.currentRole !== 'administrator'
       );
     },
+    hideFiltersForAgents() {
+      return (
+        this.isFeatureEnabledonAccount(
+          this.accountId,
+          'hide_filters_for_agent'
+        ) && this.currentRole !== 'administrator'
+      );
+    },
     hasAppliedFilters() {
       return this.appliedFilters.length !== 0;
     },
@@ -944,7 +952,7 @@ export default {
     <slot />
     <ChatListHeader
       :page-title="pageTitle"
-      :has-applied-filters="hasAppliedFilters"
+      :has-applied-filters="hasAppliedFilters && !hideFiltersForAgents"
       :has-active-folders="hasActiveFolders"
       :active-status="activeStatus"
       @addFolders="onClickOpenAddFoldersModal"
