@@ -232,18 +232,26 @@ export default {
     }),
     hideAllChatsForAgents() {
       return (
+        this.currentRole !== 'administrator' &&
         this.isFeatureEnabledonAccount(
           this.accountId,
           'hide_all_chats_for_agent'
-        ) && this.currentRole !== 'administrator'
+        )
+      );
+    },
+    hideUnassingnedForAgents() {
+      return (
+        this.currentRole !== 'administrator' &&
+        this.isFeatureEnabledonAccount(
+          this.accountId,
+          'hide_unassigned_for_agent'
+        )
       );
     },
     hideFiltersForAgents() {
       return (
-        this.isFeatureEnabledonAccount(
-          this.accountId,
-          'hide_filters_for_agent'
-        ) && this.currentRole !== 'administrator'
+        this.currentRole !== 'administrator' &&
+        this.isFeatureEnabledonAccount(this.accountId, 'hide_filters_for_agent')
       );
     },
     hasAppliedFilters() {
@@ -281,6 +289,9 @@ export default {
         .filter(({ key }) => {
           if (this.hideAllChatsForAgents) {
             return key !== 'allCount';
+          }
+          if (this.hideUnassingnedForAgents) {
+            return key !== 'unAssignedCount';
           }
           return true;
         })
