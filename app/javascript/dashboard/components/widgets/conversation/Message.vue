@@ -169,6 +169,9 @@ import { LOCAL_STORAGE_KEYS } from 'dashboard/constants/localStorage';
 import { LocalStorage } from 'shared/helpers/localStorage';
 import { getDayDifferenceFromNow } from 'shared/helpers/DateHelper';
 
+// stores and apis
+import { mapGetters } from 'vuex';
+
 export default {
   components: {
     BubbleActions,
@@ -233,6 +236,11 @@ export default {
     };
   },
   computed: {
+    ...mapGetters({
+      isFeatureEnabledonAccount: 'accounts/isFeatureEnabledonAccount',
+      currentRole: 'getCurrentRole',
+      accountId: 'getCurrentAccountId',
+    }),
     attachments() {
       // Here it is used to get sender and created_at for each attachment
       return this.data?.attachments.map(attachment => ({
@@ -325,10 +333,21 @@ export default {
     contextMenuEnabledOptions() {
       return {
         copy: this.hasText,
-        delete: this.hasText || this.hasAttachments,
+        delete:
+          !this.hideDeleteMessageForAgents &&
+          (this.hasText || this.hasAttachments),
         cannedResponse: this.isOutgoing && this.hasText,
         replyTo: !this.data.private && this.inboxSupportsReplyTo.outgoing,
       };
+    },
+    hideDeleteMessageForAgents() {
+      return (
+        this.currentRole !== 'administrator' &&
+        this.isFeatureEnabledonAccount(
+          this.accountId,
+          'hide_delete_message_for_agent'
+        )
+      );
     },
     contentAttributes() {
       return this.data.content_attributes || {};
