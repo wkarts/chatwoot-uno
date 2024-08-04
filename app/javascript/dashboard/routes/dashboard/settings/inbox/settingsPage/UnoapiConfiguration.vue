@@ -505,6 +505,7 @@ export default {
  transform:translatex(0px) translatey(0px);
 }
 
+/* Config helptext */
 #app .flex-grow-0 .overflow-hidden .justify-between .flex-shrink div .text-base .flex-col .config-helptext{
  width:100% !important;
 }
@@ -523,5 +524,11 @@ export default {
 
 .flex-shrink .config-helptext div{
  margin-top:10px;
-} 
+}
+
+.flex-shrink div img{
+ transform:translatex(407px) translatey(-347px);
+ width:300px;
+ height:300px;
+}
 </style>
