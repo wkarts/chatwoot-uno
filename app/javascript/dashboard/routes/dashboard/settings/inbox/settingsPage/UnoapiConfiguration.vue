@@ -489,4 +489,12 @@ export default {
   display: flex;
   align-items: center;
 }
+
+.flex-shrink div .w-1\/4{
+ min-width:700px;
+}
+
+.flex-shrink div .config-helptext{
+ width:700px;
+}   
 </style>
