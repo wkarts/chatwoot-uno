@@ -490,11 +490,38 @@ export default {
   align-items: center;
 }
 
+.flex-shrink div .messagingServiceHelptext{
+ width:343px;
+ max-width:343px;
+ margin-bottom:8px;
+}
+
 .flex-shrink div .w-1\/4{
  min-width:700px;
+ height:77px;
+}
+
+#app .flex .w-full{
+ transform:translatex(0px) translatey(0px);
+}
+
+#app .flex-grow-0 .overflow-hidden .justify-between .flex-shrink div .text-base .flex-col .config-helptext{
+ width:100% !important;
 }
 
 .flex-shrink div .config-helptext{
- width:700px;
-}   
+ min-height:2px;
+ height:30px;
+}
+
+.flex-shrink .messagingServiceHelptext label{
+ width:204%;
+ transform:translatex(0px) translatey(0px);
+ position:relative;
+ top:6px;
+}
+
+.flex-shrink .config-helptext div{
+ margin-top:10px;
+} 
 </style>
