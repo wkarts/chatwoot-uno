@@ -112,7 +112,7 @@ export default {
         const isAvailableForTheUser = hasPermissions(
           routesWithPermissions[menuItem.toStateName],
           userPermissions
-        );        
+        );
         if (!isAvailableForTheUser) {
           return false;
         }
