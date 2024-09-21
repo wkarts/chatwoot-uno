@@ -19,7 +19,6 @@ import { mapGetters } from 'vuex';
 
 // mixins
 import inboxMixin, { INBOX_FEATURES } from 'shared/mixins/inboxMixin';
-import aiMixin from 'dashboard/mixins/aiMixin';
 import globalConfigMixin from 'shared/mixins/globalConfigMixin';
 
 // utils
@@ -45,7 +44,7 @@ export default {
     Banner,
     ConversationLabelSuggestion,
   },
-  mixins: [inboxMixin, aiMixin, globalConfigMixin],
+  mixins: [inboxMixin, globalConfigMixin],
   props: {
     isContactPanelOpen: {
       type: Boolean,
