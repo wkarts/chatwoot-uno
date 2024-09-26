@@ -508,7 +508,7 @@ export default {
               input-id="newConversationAttachment"
               :size="4096 * 4096"
               :accept="allowedFileTypes"
-              multiple="enableMultipleFileUpload"
+              :multiple="enableMultipleFileUpload"
               :drop="true"
               :drop-directory="false"
               :data="{
