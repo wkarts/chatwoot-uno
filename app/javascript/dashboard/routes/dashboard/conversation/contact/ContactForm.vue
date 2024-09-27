@@ -202,6 +202,9 @@ export default {
     },
     onPhoneNumberInputChange(value, code) {
       this.activeDialCode = code;
+      if (!code && value) {
+        this.phoneNumber = value;
+      }
     },
     setPhoneCode(code) {
       if (this.phoneNumber !== '' && this.parsePhoneNumber) {
