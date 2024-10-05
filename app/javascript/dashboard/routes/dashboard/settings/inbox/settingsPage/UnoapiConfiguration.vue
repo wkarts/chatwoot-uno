@@ -414,7 +414,7 @@ export default {
   data() {
     return {
       apiKey: '',
-      url: 'https://cloud.unoapi',
+      url: 'https://unoapi.cloud',
       ignoreGroupMessages: true,
       ignoreHistoryMessages: true,
       webhookSendNewMessages: true,
