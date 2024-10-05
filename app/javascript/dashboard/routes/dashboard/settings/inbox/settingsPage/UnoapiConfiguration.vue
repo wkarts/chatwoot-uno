@@ -566,8 +566,9 @@ export default {
         .replace('http', 'ws');
       const socket = io(url, { path: '/ws' });
       socket.on('broadcast', data => {
+        console.log('data', data)
         if (data.phone !== this.inbox.provider_config.phone_number_id) {
-          this.notice = `Received qrcode from ${data.phone} but the current number in chatwoot is ${this.inbox.provider_config.phone_number_id}`;
+          this.notice = `Received message from ${data.phone} but the current number in chatwoot is ${this.inbox.provider_config.phone_number_id}`;
           this.qrcode = '';
           // broadcast phone is other
           return;
